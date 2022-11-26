@@ -25,6 +25,9 @@
       ],
       "@hooks/*": [
         "hooks/*"
+      ],
+      "@interfaces/*": [
+        "app/interfaces/*"
       ]
     },
     "target": "es5",
