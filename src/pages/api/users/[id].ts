@@ -1,11 +1,13 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
+import { validatorHandler } from "../../../app/middleware/validator.handler";
 import bcrypt from "bcrypt";
 import {
   findOne,
   updateUser,
   deleteUser,
 } from "../../../app/services/user.service";
+import { updateUserSchema } from "../../../app/schemas/user.schema";
 
 export default async function handler(
   req: NextApiRequest,
@@ -34,14 +36,13 @@ const findbyKey = async (req, res) => {
 };
 
 const update = async (req, res) => {
+  validatorHandler(updateUserSchema, "body", res, req);
   const oldUser = req.body;
-  console.log("oldUser: ", oldUser);
   if (oldUser.password && oldUser.password.length > 0) {
     oldUser.password = await bcrypt.hash(oldUser.password, 10);
   } else {
     delete oldUser.password;
   }
-  console.log("oldUser: ", oldUser);
   const user = await updateUser(req.body);
   res.status(200).json(user);
 };

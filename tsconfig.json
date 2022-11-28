@@ -28,6 +28,9 @@
       ],
       "@interfaces/*": [
         "app/interfaces/*"
+      ],
+      "@schemas/*": [
+        "app/schemas/*"
       ]
     },
     "target": "es5",
